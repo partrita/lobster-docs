@@ -1,4 +1,4 @@
-# Contributors
+# 기여자
 * [Karina Zadorozhny](https://github.com/karinazad)
 * [Joseph Kleinhenz](https://github.com/kleinhenz)
 * [Nathan C. Frey](https://github.com/ncfrey)

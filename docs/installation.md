@@ -1,42 +1,42 @@
-# Installation
+# 설치
 
-There are multiple ways to install LBSTER on your system. Choose the approach that works best for your environment.
+시스템에 LBSTER를 설치하는 방법에는 여러 가지가 있습니다. 사용자 환경에 가장 적합한 방법을 선택하십시오.
 
-## Using `uv`
+## `uv` 사용
 
-[`uv`](https://github.com/astral-sh/uv) is a fast Python package installer and resolver. This is the recommended installation method:
+[`uv`](https://github.com/astral-sh/uv)는 빠른 파이썬 패키지 설치 및 해결 프로그램입니다. 이 방법이 권장되는 설치 방법입니다:
 
 ```bash
-# Create a new virtual environment
+# 새 가상 환경 만들기
 uv venv --python 3.12
 
-# Activate the virtual environment
+# 가상 환경 활성화
 source .venv/bin/activate
 
-# Install LBSTER
+# LBSTER 설치
 uv pip install -e .
 ```
 
-## Using `mamba` or `conda`
+## `mamba` 또는 `conda` 사용
 
-If you prefer using conda environments:
+conda 환경을 선호하는 경우:
 
 ```bash
-# Clone the repo
+# 저장소 복제
 git clone https://github.com/prescient-design/lobster.git
 cd lobster
 
-# Create and activate the environment
+# 환경 생성 및 활성화
 mamba env create -f env.yml
 conda activate lobster
 
-# Install in development mode
+# 개발 모드로 설치
 pip install -e .
 ```
 
-## Dependencies
+## 의존성
 
-LBSTER has the following core dependencies:
+LBSTER에는 다음과 같은 핵심 의존성이 있습니다:
 
 - Python >= 3.10
 - torch
@@ -47,50 +47,50 @@ LBSTER has the following core dependencies:
 - scipy
 - hydra-core
 - wandb
-- flash-attn (Linux only)
+- flash-attn (리눅스 전용)
 
-The full list of dependencies can be found in the `pyproject.toml` file.
+전체 의존성 목록은 `pyproject.toml` 파일에서 찾을 수 있습니다.
 
-## Installing Optional Dependencies
+## 선택적 의존성 설치
 
-For working with the Multi-Modal Molecular (MGM) models, you can install additional dependencies:
+MGM(Multi-Modal Molecular) 모델로 작업하려면 추가 의존성을 설치할 수 있습니다:
 
 ```bash
 pip install -e ".[mgm]"
 ```
 
-This will install additional packages like RDKit and SELFIES which are needed for molecule processing.
+이렇게 하면 분자 처리에 필요한 RDKit 및 SELFIES와 같은 추가 패키지가 설치됩니다.
 
-## Verifying Installation
+## 설치 확인
 
-You can verify your installation by running the following Python code:
+다음 파이썬 코드를 실행하여 설치를 확인할 수 있습니다:
 
 ```python
 from lobster.model import LobsterPMLM
 
-# Load a pre-trained model
+# 사전 훈련된 모델 로드
 model = LobsterPMLM("asalam91/lobster_24M")
-print(f"Model loaded successfully with {sum(p.numel() for p in model.parameters())} parameters")
+print(f"모델이 {sum(p.numel() for p in model.parameters())}개의 파라미터로 성공적으로 로드되었습니다")
 ```
 
-## GPU Support
+## GPU 지원
 
-LBSTER works best with GPU acceleration. The package will automatically use CUDA if available. To check if your GPU is being recognized:
+LBSTER는 GPU 가속을 통해 가장 잘 작동합니다. 패키지는 사용 가능한 경우 자동으로 CUDA를 사용합니다. GPU가 인식되는지 확인하려면:
 
 ```python
 import torch
-print(f"CUDA available: {torch.cuda.is_available()}")
+print(f"CUDA 사용 가능: {torch.cuda.is_available()}")
 if torch.cuda.is_available():
-    print(f"CUDA device: {torch.cuda.get_device_name(0)}")
+    print(f"CUDA 장치: {torch.cuda.get_device_name(0)}")
 ```
 
-## Troubleshooting
+## 문제 해결
 
-If you encounter issues during installation:
+설치 중 문제가 발생하면:
 
-1. Ensure you have the correct Python version (3.10+)
-2. For GPU support, make sure you have the compatible CUDA version installed
-3. Check that you have sufficient disk space (~4GB for full installation)
-4. If you encounter issues with `flash-attn`, it might be platform-dependent. The package will still work without it but will be slower for some operations.
+1. 올바른 파이썬 버전(3.10 이상)이 있는지 확인하십시오.
+2. GPU 지원을 위해 호환되는 CUDA 버전이 설치되어 있는지 확인하십시오.
+3. 전체 설치에 충분한 디스크 공간(~4GB)이 있는지 확인하십시오.
+4. `flash-attn`에 문제가 발생하면 플랫폼에 따라 다를 수 있습니다. 패키지는 이 없이도 작동하지만 일부 작업에서는 속도가 느려집니다.
 
-If you still have issues, please open an issue on the [GitHub repository](https://github.com/prescient-design/lobster/issues).
+여전히 문제가 있는 경우 [GitHub 저장소](https://github.com/prescient-design/lobster/issues)에 문제를 제기하십시오.

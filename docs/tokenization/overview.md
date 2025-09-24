@@ -1,14 +1,14 @@
-# Tokenization in LBSTER
+# LBSTER의 토큰화
 
-Tokenization is a critical preprocessing step for language models, converting raw biological sequences into numeric tokens that models can process. LBSTER provides specialized tokenizers for different types of biological sequences.
+토큰화는 원시 생물학적 서열을 모델이 처리할 수 있는 숫자 토큰으로 변환하는 언어 모델의 중요한 전처리 단계입니다. LBSTER는 다양한 유형의 생물학적 서열에 대한 전문 토크나이저를 제공합니다.
 
-## Tokenizer Types
+## 토크나이저 유형
 
-LBSTER includes several tokenizer implementations for different biological sequence types:
+LBSTER는 다양한 생물학적 서열 유형에 대한 여러 토크나이저 구현을 포함합니다:
 
-### 1. Amino Acid Tokenizer
+### 1. 아미노산 토크나이저
 
-The `AminoAcidTokenizerFast` tokenizer is designed for protein sequences and tokenizes each amino acid as a separate token.
+`AminoAcidTokenizerFast` 토크나이저는 단백질 서열을 위해 설계되었으며 각 아미노산을 별도의 토큰으로 토큰화합니다.
 
 ```python
 from lobster.tokenization import AminoAcidTokenizerFast
@@ -18,9 +18,9 @@ tokens = tokenizer("MVLSPADKTNVKAAWG", return_tensors="pt")
 print(tokens["input_ids"])
 ```
 
-### 2. Nucleotide Tokenizer
+### 2. 뉴클레오티드 토크나이저
 
-The `NucleotideTokenizerFast` tokenizer is specialized for DNA and RNA sequences, tokenizing each nucleotide (A, C, G, T/U) as a separate token.
+`NucleotideTokenizerFast` 토크나이저는 DNA 및 RNA 서열에 특화되어 있으며 각 뉴클레오티드(A, C, G, T/U)를 별도의 토큰으로 토큰화합니다.
 
 ```python
 from lobster.tokenization import NucleotideTokenizerFast
@@ -30,21 +30,21 @@ tokens = tokenizer("ATGCGATCGATCGATCG", return_tensors="pt")
 print(tokens["input_ids"])
 ```
 
-### 3. SMILES Tokenizer
+### 3. SMILES 토크나이저
 
-The `SmilesTokenizerFast` tokenizer handles SMILES strings for representing chemical molecules, breaking them down into chemically meaningful tokens.
+`SmilesTokenizerFast` 토크나이저는 화학 분자를 나타내는 SMILES 문자열을 처리하여 화학적으로 의미 있는 토큰으로 분해합니다.
 
 ```python
 from lobster.tokenization import SmilesTokenizerFast
 
 tokenizer = SmilesTokenizerFast()
-tokens = tokenizer("CC(=O)OC1=CC=CC=C1C(=O)O", return_tensors="pt")  # Aspirin
+tokens = tokenizer("CC(=O)OC1=CC=CC=C1C(=O)O", return_tensors="pt")  # 아스피린
 print(tokens["input_ids"])
 ```
 
-### 4. PMLM Tokenizer
+### 4. PMLM 토크나이저
 
-The `PmlmTokenizer` is the default tokenizer for LBSTER's protein language models, compatible with ESM-style tokenization.
+`PmlmTokenizer`는 LBSTER의 단백질 언어 모델에 대한 기본 토크나이저이며 ESM 스타일 토큰화와 호환됩니다.
 
 ```python
 from lobster.tokenization import PmlmTokenizer
@@ -56,9 +56,9 @@ tokens = tokenizer("MVLSPADKTNVKAAWG", return_tensors="pt")
 print(tokens["input_ids"])
 ```
 
-### 5. MGM Tokenizer
+### 5. MGM 토크나이저
 
-The `MgmTokenizer` is a Multi-modal Genomics Model tokenizer supporting multiple modalities including amino acids, nucleotides, and SELFIES.
+`MgmTokenizer`는 아미노산, 뉴클레오티드 및 SELFIES를 포함한 여러 양식을 지원하는 다중 모드 유전체학 모델 토크나이저입니다.
 
 ```python
 from lobster.tokenization import MgmTokenizer
@@ -68,11 +68,11 @@ tokens = tokenizer("ATGCGATCGATCGATCG", return_tensors="pt")
 print(tokens["input_ids"])
 ```
 
-## Tokenizer Transforms
+## 토크나이저 변환
 
-LBSTER provides transform wrappers around tokenizers for easier integration with data pipelines:
+LBSTER는 데이터 파이프라인과의 쉬운 통합을 위해 토크나이저 주위에 변환 래퍼를 제공합니다:
 
-### Basic Tokenizer Transform
+### 기본 토크나이저 변환
 
 ```python
 from lobster.transforms import TokenizerTransform
@@ -85,11 +85,11 @@ transform = TokenizerTransform(
     truncation=True
 )
 
-# Can be used with datasets
+# 데이터셋과 함께 사용 가능
 tokens = transform("MVLSPADKTNVKAAWG")
 ```
 
-### Concept-aware Tokenizer Transform
+### 개념 인식 토크나이저 변환
 
 ```python
 from lobster.tokenization import PmlmConceptTokenizerTransform
@@ -104,56 +104,56 @@ transform = PmlmConceptTokenizerTransform(
     normalize=True
 )
 
-# Returns both tokens and concept values
+# 토큰과 개념 값을 모두 반환
 result = transform("MVLSPADKTNVKAAWG")
 tokens = result["input_ids"]
 concepts = result["all_concepts"]
 ```
 
-## Special Tokens
+## 특수 토큰
 
-LBSTER tokenizers use several special tokens:
+LBSTER 토크나이저는 여러 특수 토큰을 사용합니다:
 
-- `<cls>`: Start of sequence token
-- `<pad>`: Padding token
-- `<eos>`: End of sequence token
-- `<unk>`: Unknown token
-- `<mask>`: Mask token (for masked language modeling)
-- `<sep>`: Separator token (for multi-sequence tasks)
+- `<cls>`: 서열 시작 토큰
+- `<pad>`: 패딩 토큰
+- `<eos>`: 서열 종료 토큰
+- `<unk>`: 알 수 없는 토큰
+- `<mask>`: 마스크 토큰 (마스크 언어 모델링용)
+- `<sep>`: 구분자 토큰 (다중 서열 작업용)
 
-Additional special tokens may be present in specific tokenizers.
+특정 토크나이저에는 추가 특수 토큰이 있을 수 있습니다.
 
-## Vocabulary Sizes
+## 어휘 크기
 
-Different tokenizers have different vocabulary sizes:
+서로 다른 토크나이저는 서로 다른 어휘 크기를 가집니다:
 
-- Amino Acid Tokenizer: 33 tokens (20 standard amino acids + special tokens)
-- Nucleotide Tokenizer: 12 tokens (4 nucleotides + special tokens)
-- PMLM Tokenizer: Depends on the pre-trained model, typically 30-33 tokens
-- MGM Tokenizer: Variable based on configuration
+- 아미노산 토크나이저: 33개 토큰 (20개 표준 아미노산 + 특수 토큰)
+- 뉴클레오티드 토크나이저: 12개 토큰 (4개 뉴클레오티드 + 특수 토큰)
+- PMLM 토크나이저: 사전 훈련된 모델에 따라 다르며 일반적으로 30-33개 토큰
+- MGM 토크나이저: 구성에 따라 가변적
 
-## Using Tokenizers with Models
+## 모델과 함께 토크나이저 사용
 
-LBSTER models are instantiated with their corresponding tokenizer:
+LBSTER 모델은 해당 토크나이저로 인스턴스화됩니다:
 
 ```python
 from lobster.model import LobsterPMLM
 
-# Model comes with appropriate tokenizer
+# 모델은 적절한 토크나이저와 함께 제공됩니다
 model = LobsterPMLM("asalam91/lobster_24M")
 tokenizer = model.tokenizer
 
-# Tokenize a sequence
+# 서열 토큰화
 tokens = tokenizer("MVLSPADKTNVKAAWG", return_tensors="pt")
 
-# Forward pass through the model
-outputs = model.model(input_ids=tokens["input_ids"], 
+# 모델을 통한 순방향 패스
+outputs = model.model(input_ids=tokens["input_ids"],
                       attention_mask=tokens["attention_mask"])
 ```
 
-## Custom Tokenization Workflows
+## 사용자 지정 토큰화 워크플로
 
-For advanced use cases, you can build custom tokenization pipelines:
+고급 사용 사례의 경우 사용자 지정 토큰화 파이프라인을 구축할 수 있습니다:
 
 ```python
 from lobster.tokenization import PmlmTokenizer
@@ -164,36 +164,36 @@ path = importlib.resources.files("lobster") / "assets" / "pmlm_tokenizer"
 tokenizer = PmlmTokenizer.from_pretrained(path, do_lower_case=False)
 
 def batch_tokenize(sequences, max_length=512):
-    """Tokenize a batch of sequences with padding."""
+    """패딩으로 시퀀스 배치 토큰화"""
     encodings = [tokenizer.encode(seq) for seq in sequences]
-    
-    # Determine max length in this batch
+
+    # 이 배치의 최대 길이 결정
     batch_max_len = min(max(len(enc) for enc in encodings), max_length)
-    
-    # Pad sequences
+
+    # 시퀀스 패딩
     padded_encodings = []
     attention_masks = []
-    
+
     for enc in encodings:
-        # Truncate if necessary
+        # 필요한 경우 자르기
         if len(enc) > max_length:
             enc = enc[:max_length]
-        
-        # Create attention mask (1 for tokens, 0 for padding)
+
+        # 어텐션 마스크 생성 (토큰의 경우 1, 패딩의 경우 0)
         attention_mask = [1] * len(enc) + [0] * (batch_max_len - len(enc))
         attention_mask = attention_mask[:max_length]
-        
-        # Pad sequence
+
+        # 시퀀스 패딩
         padded_enc = enc + [tokenizer.pad_token_id] * (batch_max_len - len(enc))
         padded_enc = padded_enc[:max_length]
-        
+
         padded_encodings.append(padded_enc)
         attention_masks.append(attention_mask)
-    
+
     return {
         "input_ids": torch.tensor(padded_encodings),
         "attention_mask": torch.tensor(attention_masks)
     }
 ```
 
-In the following sections, we'll explore each tokenizer type in more detail.
+다음 섹션에서는 각 토크나이저 유형을 더 자세히 살펴보겠습니다.

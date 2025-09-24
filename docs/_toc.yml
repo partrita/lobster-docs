@@ -4,32 +4,32 @@
 format: jb-book
 root: intro
 parts:
-  - caption: Getting Started
+  - caption: 시작하기
     chapters:
       - file: installation
-  - caption: Models
+  - caption: 모델
     chapters:
       - file: models/overview
       - file: models/masked_models
       - file: models/causal_models
       - file: models/concept_bottleneck_models
-  - caption: Tokenization
+  - caption: 토큰화
     chapters:
       - file: tokenization/overview
       - file: tokenization/amino_acid_tokenization
       - file: tokenization/nucleotide_tokenization
-  - caption: Tutorials
+  - caption: 튜토리얼
     chapters:
       - file: tutorials/embedding_extraction
       - file: tutorials/concept_interventions
       - file: tutorials/training_from_scratch
       - file: tutorials/dyab
       - file: tutorials/fine_tuning
-  - caption: Advanced Topics
+  - caption: 고급 주제
     chapters:
       - file: advanced/working_with_structures
       - file: advanced/multi_modal_models
       - file: advanced/custom_tokenizers
-  - caption: Contributors
+  - caption: 기여자
     chapters:
       - file: contributors
